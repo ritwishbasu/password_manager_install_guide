@@ -17,6 +17,11 @@
       --badge-text: #818cf8;
       --inner-card: #1f2937;
       --code-bg: #374151;
+      
+      /* Highlight styling for recommended option */
+      --rec-border: #6366f1;
+      --rec-badge-bg: #22c55e;
+      --rec-badge-text: #052e16;
     }
 
     [data-theme="light"] {
@@ -31,6 +36,10 @@
       --badge-text: #3730a3;
       --inner-card: #f9fafb;
       --code-bg: #e5e7eb;
+      
+      --rec-border: #4f46e5;
+      --rec-badge-bg: #16a34a;
+      --rec-badge-text: #ffffff;
     }
 
     * {
@@ -150,9 +159,35 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      border: 1px solid transparent;
+      position: relative;
+    }
+
+    /* Highlight class for Bitwarden */
+    .option-card.recommended {
+      border-color: var(--rec-border);
+      box-shadow: 0 0 12px rgba(99, 102, 241, 0.2);
+    }
+
+    .option-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
     }
 
     .option-name { font-weight: 600; font-size: 0.95rem; }
+
+    .recommended-tag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background-color: var(--rec-badge-bg);
+      color: var(--rec-badge-text);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      width: fit-content;
+    }
 
     .btn-group { display: flex; gap: 0.5rem; }
 
@@ -237,40 +272,53 @@
     <div class="card">
       <div class="step-header">
         <span class="step-number">1</span>
-        <h2 data-i18n="step1_title">Install only one out of these Approved Password Managers</h2>
+        <h2 data-i18n="step1_title">Install an Approved Password Manager</h2>
       </div>
-      <p class="step-desc" data-i18n="step1_desc">Select only one authorized password manager out of those choices and install its desktop app and browser extension:</p>
+      <p class="step-desc" data-i18n="step1_desc">Select an authorized password manager below and install its desktop app and browser extension (Bitwarden is strongly recommended):</p>
 
       <div class="options-grid">
-        <div class="option-card">
-          <span class="option-name">1Password</span>
-          <div class="btn-group">
-            <a href="https://1password.com/downloads" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="btn_app">App</a>
-            <a href="https://chromewebstore.google.com/detail/1password-beta-%E2%80%93-password/khgocmkkpikpnmmkgmdnfckapcdkgfaf?hl=en" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="btn_ext">Extension</a>
+        <!-- Bitwarden (Recommended) -->
+        <div class="option-card recommended">
+          <div class="option-info">
+            <span class="option-name">Bitwarden</span>
+            <span class="recommended-tag" data-i18n="tag_recommended">Recommended</span>
           </div>
-        </div>
-
-        <div class="option-card">
-          <span class="option-name">Bitwarden</span>
           <div class="btn-group">
             <a href="https://bitwarden.com/download/" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="btn_app">App</a>
             <a href="https://chromewebstore.google.com/detail/bitwarden-password-manage/nngceckbapebfimnlniiiahkandclblb" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="btn_ext">Extension</a>
           </div>
         </div>
 
+        <!-- 1Password -->
         <div class="option-card">
-          <span class="option-name">LastPass</span>
+          <div class="option-info">
+            <span class="option-name">1Password</span>
+          </div>
           <div class="btn-group">
-            <a href="https://www.lastpass.com/download" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="btn_app">App</a>
-            <a href="https://chromewebstore.google.com/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="btn_ext">Extension</a>
+            <a href="https://1password.com/downloads" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="btn_app">App</a>
+            <a href="https://chromewebstore.google.com/detail/1password-beta-%E2%80%93-password/khgocmkkpikpnmmkgmdnfckapcdkgfaf?hl=en" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="btn_ext">Extension</a>
           </div>
         </div>
 
+        <!-- Dashlane -->
         <div class="option-card">
-          <span class="option-name">Dashlane</span>
+          <div class="option-info">
+            <span class="option-name">Dashlane</span>
+          </div>
           <div class="btn-group">
             <a href="https://www.dashlane.com/download" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="btn_app">App</a>
             <a href="https://chromewebstore.google.com/detail/dashlane-%E2%80%94-password-manag/fdjamakpfbbddfjaooikfcpapjohcfmg?hl=en" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="btn_ext">Extension</a>
+          </div>
+        </div>
+
+        <!-- LastPass -->
+        <div class="option-card">
+          <div class="option-info">
+            <span class="option-name">LastPass</span>
+          </div>
+          <div class="btn-group">
+            <a href="https://www.lastpass.com/download" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="btn_app">App</a>
+            <a href="https://chromewebstore.google.com/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="btn_ext">Extension</a>
           </div>
         </div>
       </div>
@@ -310,8 +358,9 @@
       en: {
         header_title: "Action Required: Password Manager Setup",
         header_desc: "Complete these steps to verify compliance for your work computer.",
-        step1_title: "Install only one out of these Approved Password Managers",
-        step1_desc: "Select only one authorized password manager out of those choices and install its desktop app and browser extension:",
+        step1_title: "Install an Approved Password Manager",
+        step1_desc: "Select an authorized password manager below and install its desktop app and browser extension (Bitwarden is strongly recommended):",
+        tag_recommended: "Recommended",
         btn_app: "App",
         btn_ext: "Extension",
         step1_check: "I have installed the app and browser extension",
@@ -327,8 +376,9 @@
       hi: {
         header_title: "कार्रवाई आवश्यक: पासवर्ड मैनेजर सेटअप",
         header_desc: "अपने कार्य कंप्यूटर के अनुपालन की पुष्टि के लिए इन चरणों को पूरा करें।",
-        step1_title: "इन स्वीकृत पासवर्ड प्रबंधकों में से केवल एक स्थापित करें",
-        step1_desc: "इन विकल्पों में से केवल एक अधिकृत पासवर्ड प्रबंधक चुनें और उसका डेस्कटॉप ऐप और ब्राउज़र एक्सटेंशन इंस्टॉल करें:",
+        step1_title: "एक स्वीकृत पासवर्ड मैनेजर स्थापित करें",
+        step1_desc: "नीचे एक अधिकृत पासवर्ड प्रबंधक चुनें और उसका ऐप तथा एक्सटेंशन इंस्टॉल करें (Bitwarden की अत्यधिक अनुशंसा की जाती है):",
+        tag_recommended: "अनुशंसित",
         btn_app: "ऐप",
         btn_ext: "एक्सटेंशन",
         step1_check: "मैंने ऐप और ब्राउज़र एक्सटेंशन इंस्टॉल कर लिया है",
@@ -344,8 +394,9 @@
       bn: {
         header_title: "পদক্ষেপ প্রয়োজন: পাসওয়ার্ড ম্যানেজার সেটআপ",
         header_desc: "আপনার কাজের কম্পিউটারের সম্মতি যাচাই করতে এই পদক্ষেপগুলি সম্পন্ন করুন।",
-        step1_title: "এই অনুমোদিত পাসওয়ার্ড ম্যানেজারগুলির মধ্যে কেবল একটি ইনস্টল করুন",
-        step1_desc: "এই বিকল্পগুলির মধ্য থেকে কেবল একটি অনুমোদিত পাসওয়ার্ড ম্যানেজার নির্বাচন করুন এবং এর ডেক্সটপ অ্যাপ এবং ব্রাউজার এক্সটেন্সন ইনস্টল করুন:",
+        step1_title: "একটি অনুমোদিত পাসওয়ার্ড ম্যানেজার ইনস্টল করুন",
+        step1_desc: "নিচের বিকল্পগুলি থেকে একটি অনুমোদিত পাসওয়ার্ড ম্যানেজার নির্বাচন করুন এবং এর অ্যাপ ও এক্সটেনশন ইনস্টল করুন (Bitwarden বিশেষভাবে সুপারিশ করা হচ্ছে):",
+        tag_recommended: "সুপারিশকৃত",
         btn_app: "অ্যাপ",
         btn_ext: "এক্সটেনশন",
         step1_check: "আমি অ্যাপ এবং ব্রাউজার এক্সটেনশন ইনস্টল করেছি",
