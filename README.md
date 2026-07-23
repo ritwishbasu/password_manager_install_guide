@@ -22,7 +22,7 @@ Hosted live via **GitHub Pages**.
 ## 🚀 Live Demo
 
 Check out the live page on GitHub Pages:
-`https://<your-username>.github.io/<your-repository-name>/`
+https://ritwishbasu.github.io/password_manager_install_guide/
 
 ---
 
@@ -32,5 +32,5 @@ No dependencies or build steps are required! This is a lightweight, zero-framewo
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/](https://github.com/)<your-username>/<your-repository-name>.git
-   cd <your-repository-name>
+   git clone [https://github.com/ritwishbasu/password_manager_install_guide.git](https://github.com/ritwishbasu/password_manager_install_guide.git)
+   cd password_manager_install_guide
