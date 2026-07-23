@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Action Required: Password Manager Setup</title>
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-hover: #4338CA;
+            --bg: #F9FAFB;
+            --card-bg: #FFFFFF;
+            --text-main: #1F2937;
+            --text-muted: #4B5563;
+            --border: #E5E7EB;
+            --accent-bg: #EEF2FF;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 680px;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 40px;
+            border: 1px solid var(--border);
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 24px;
+            margin-bottom: 32px;
+        }
+
+        .icon-badge {
+            font-size: 40px;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin: 0 0 8px 0;
+            color: #111827;
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 15px;
+            margin: 0;
+        }
+
+        .step-card {
+            background: #FFFFFF;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: border-color 0.2s ease;
+        }
+
+        .step-card:hover {
+            border-color: #C7D2FE;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .step-number {
+            background: var(--accent-bg);
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 14px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        h2 {
+            font-size: 18px;
+            margin: 0;
+            color: #111827;
+        }
+
+        ul {
+            margin: 12px 0;
+            padding-left: 24px;
+        }
+
+        li {
+            margin-bottom: 6px;
+            color: var(--text-muted);
+        }
+
+        .note-box {
+            background-color: var(--accent-bg);
+            border-left: 4px solid var(--primary);
+            padding: 12px 16px;
+            border-radius: 0 6px 6px 0;
+            font-size: 14px;
+            color: #3730A3;
+            margin-top: 12px;
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 16px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--border);
+            cursor: pointer;
+            user-select: none;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .checkbox-wrapper input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 32px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="icon-badge">🔒</div>
+        <h1>Action Required: Install a Password Manager</h1>
+        <p class="subtitle">Please complete these steps to ensure your work computer meets security compliance standards.</p>
+    </div>
+
+    <!-- Step 1 -->
+    <div class="step-card">
+        <div class="step-header">
+            <span class="step-number">1</span>
+            <h2>Install an Approved Password Manager</h2>
+        </div>
+        <p style="margin: 0 0 8px 0; color: var(--text-muted);">Choose one of the following apps and set up your account:</p>
+        <ul>
+            <li><strong>1Password</strong></li>
+            <li><strong>Bitwarden</strong></li>
+            <li><strong>LastPass</strong></li>
+            <li><strong>Dashlane</strong></li>
+        </ul>
+        <div class="note-box">
+            💡 <strong>Crucial Step:</strong> Make sure you also install and activate the <strong>Browser Extension</strong> in your primary browser (Chrome, Safari, Edge, etc.). Vanta uses the extension to verify installation.
+        </div>
+        <label class="checkbox-wrapper">
+            <input type="checkbox"> I have installed the app & browser extension
+        </label>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step-card">
+        <div class="step-header">
+            <span class="step-number">2</span>
+            <h2>Keep the Vanta App Active</h2>
+        </div>
+        <p style="margin: 0; color: var(--text-muted);">Ensure the <strong>Vanta Device Monitor</strong> app is running in the background on your computer. It will automatically scan your system and report back that your device is secure.</p>
+        <div class="note-box" style="background-color: #F3F4F6; border-color: #9CA3AF; color: #374151;">
+            ✨ You don't need to manually send screenshots or evidence—Vanta handles it automatically!
+        </div>
+        <label class="checkbox-wrapper">
+            <input type="checkbox"> Vanta Device Monitor is running
+        </label>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step-card">
+        <div class="step-header">
+            <span class="step-number">3</span>
+            <h2>You're All Set!</h2>
+        </div>
+        <p style="margin: 0; color: var(--text-muted);">Once Vanta syncs, your device will automatically update to <strong>Compliant</strong> status in our dashboard.</p>
+        <label class="checkbox-wrapper">
+            <input type="checkbox"> Done!
+        </label>
+    </div>
+
+    <div class="footer">
+        Need help or have questions? <br>
+        Contact the <strong>IT Support Team</strong> or message us in Slack!
+    </div>
+</div>
+
+</body>
+</html>
