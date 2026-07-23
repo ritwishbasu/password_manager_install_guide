@@ -1,230 +1,390 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Action Required: Password Manager Setup</title>
-    <style>
-        :root {
-            --primary: #4F46E5;
-            --primary-hover: #4338CA;
-            --bg: #F9FAFB;
-            --card-bg: #FFFFFF;
-            --text-main: #1F2937;
-            --text-muted: #4B5563;
-            --border: #E5E7EB;
-            --accent-bg: #EEF2FF;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Security Compliance — Password Manager Setup</title>
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --primary-light: #eef2ff;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --border-hover: #cbd5e1;
+      --success: #10b981;
+      --success-bg: #ecfdf5;
+      --radius: 12px;
+      --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+      --shadow-md: 0 10px 15px -3px rgba(15, 23, 42, 0.05), 0 4px 6px -4px rgba(15, 23, 42, 0.05);
+    }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg);
-            color: var(--text-main);
-            line-height: 1.6;
-            margin: 0;
-            padding: 40px 20px;
-            display: flex;
-            justify-content: center;
-        }
+    * {
+      box-sizing: border-box;
+    }
 
-        .container {
-            max-width: 680px;
-            width: 100%;
-            background: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            padding: 40px;
-            border: 1px solid var(--border);
-        }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.5;
+      margin: 0;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
 
-        .header {
-            text-align: center;
-            border-bottom: 2px solid var(--border);
-            padding-bottom: 24px;
-            margin-bottom: 32px;
-        }
+    .container {
+      max-width: 680px;
+      width: 100%;
+    }
 
-        .icon-badge {
-            font-size: 40px;
-            margin-bottom: 12px;
-            display: inline-block;
-        }
+    /* Header Styling */
+    .header {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      text-align: center;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
 
-        h1 {
-            font-size: 24px;
-            margin: 0 0 8px 0;
-            color: #111827;
-        }
+    .header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #6366f1, #8b5cf6, #3b82f6);
+    }
 
-        p.subtitle {
-            color: var(--text-muted);
-            font-size: 15px;
-            margin: 0;
-        }
+    .icon-badge {
+      width: 52px;
+      height: 52px;
+      background: var(--primary-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px auto;
+      font-size: 24px;
+    }
 
-        .step-card {
-            background: #FFFFFF;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            transition: border-color 0.2s ease;
-        }
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      margin: 0 0 8px 0;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+    }
 
-        .step-card:hover {
-            border-color: #C7D2FE;
-        }
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin: 0;
+    }
 
-        .step-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
+    /* Step Card Styling */
+    .step-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease-in-out;
+    }
 
-        .step-number {
-            background: var(--accent-bg);
-            color: var(--primary);
-            font-weight: 700;
-            font-size: 14px;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
+    .step-card:hover {
+      border-color: var(--border-hover);
+      box-shadow: var(--shadow-md);
+    }
 
-        h2 {
-            font-size: 18px;
-            margin: 0;
-            color: #111827;
-        }
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
 
-        ul {
-            margin: 12px 0;
-            padding-left: 24px;
-        }
+    .step-number {
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 13px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
 
-        li {
-            margin-bottom: 8px;
-            color: var(--text-muted);
-        }
+    h2 {
+      font-size: 17px;
+      font-weight: 600;
+      margin: 0;
+      color: var(--text-main);
+    }
 
-        a.link {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-        }
+    .step-desc {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin: 0 0 20px 0;
+    }
 
-        a.link:hover {
-            text-decoration: underline;
-        }
+    /* Option Grid for Downloads */
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
 
-        .note-box {
-            background-color: var(--accent-bg);
-            border-left: 4px solid var(--primary);
-            padding: 12px 16px;
-            border-radius: 0 6px 6px 0;
-            font-size: 14px;
-            color: #3730A3;
-            margin-top: 12px;
-        }
+    .option-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fafafa;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
 
-        .checkbox-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 16px;
-            padding-top: 12px;
-            border-top: 1px dashed var(--border);
-            cursor: pointer;
-            user-select: none;
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-muted);
-        }
+    .option-card:hover {
+      background: #ffffff;
+      border-color: var(--primary);
+    }
 
-        .checkbox-wrapper input {
-            width: 18px;
-            height: 18px;
-            accent-color: var(--primary);
-            cursor: pointer;
-        }
+    .option-name {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-main);
+    }
 
-        .footer {
-            text-align: center;
-            margin-top: 32px;
-            padding-top: 20px;
-            border-top: 1px solid var(--border);
-            font-size: 14px;
-            color: var(--text-muted);
-        }
-    </style>
+    .btn-group {
+      display: flex;
+      gap: 6px;
+    }
+
+    .btn-link {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--primary);
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .btn-link:hover {
+      background: var(--primary-light);
+      border-color: #c7d2fe;
+      color: var(--primary-hover);
+    }
+
+    /* Note Box */
+    .note-box {
+      background-color: var(--primary-light);
+      border-left: 3px solid var(--primary);
+      padding: 12px 16px;
+      border-radius: 0 8px 8px 0;
+      font-size: 13px;
+      color: #3730a3;
+      margin-top: 16px;
+    }
+
+    .note-box.gray {
+      background-color: #f1f5f9;
+      border-color: #94a3b8;
+      color: #334155;
+    }
+
+    /* Interactive Checkbox Wrapper */
+    .checkbox-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      cursor: pointer;
+      user-select: none;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: color 0.2s ease;
+    }
+
+    .checkbox-wrapper:hover {
+      color: var(--text-main);
+    }
+
+    .checkbox-wrapper input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    /* Active Completed State for Cards */
+    .step-card.completed {
+      border-color: #a7f3d0;
+      background-color: #fafdfb;
+    }
+
+    .step-card.completed .step-number {
+      background: var(--success-bg);
+      color: var(--success);
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 32px;
+      padding-top: 20px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .footer strong {
+      color: var(--text-main);
+    }
+  </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="header">
-        <div class="icon-badge">🔒</div>
-        <h1>Action Required: Install a Password Manager</h1>
-        <p class="subtitle">Please complete these steps to ensure your work computer meets security compliance standards.</p>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="icon-badge">🔒</div>
+    <h1>Action Required: Password Manager Setup</h1>
+    <p class="subtitle">Complete these steps to verify compliance for your work computer.</p>
+  </div>
+
+  <!-- Step 1 -->
+  <div class="step-card" id="card-1">
+    <div class="step-header">
+      <span class="step-number">1</span>
+      <h2>Install an Approved Password Manager</h2>
+    </div>
+    <p class="step-desc">Select an authorized password manager and install its desktop app or browser extension:</p>
+    
+    <div class="options-grid">
+      <div class="option-card">
+        <span class="option-name">1Password</span>
+        <div class="btn-group">
+          <a href="https://1password.com/downloads" target="_blank" rel="noopener noreferrer" class="btn-link">App</a>
+          <a href="https://chromewebstore.google.com/detail/1password-beta-%E2%80%93-password/khgocmkkpikpnmmkgmdnfckapcdkgfaf?hl=en" target="_blank" rel="noopener noreferrer" class="btn-link">Extension</a>
+        </div>
+      </div>
+
+      <div class="option-card">
+        <span class="option-name">Bitwarden</span>
+        <div class="btn-group">
+          <a href="https://bitwarden.com/download/" target="_blank" rel="noopener noreferrer" class="btn-link">App</a>
+          <a href="https://chromewebstore.google.com/detail/bitwarden-password-manage/nngceckbapebfimnlniiiahkandclblb" target="_blank" rel="noopener noreferrer" class="btn-link">Extension</a>
+        </div>
+      </div>
+
+      <div class="option-card">
+        <span class="option-name">LastPass</span>
+        <div class="btn-group">
+          <a href="https://www.lastpass.com/download" target="_blank" rel="noopener noreferrer" class="btn-link">App</a>
+          <a href="https://chromewebstore.google.com/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd" target="_blank" rel="noopener noreferrer" class="btn-link">Extension</a>
+        </div>
+      </div>
+
+      <div class="option-card">
+        <span class="option-name">Dashlane</span>
+        <div class="btn-group">
+          <a href="https://www.dashlane.com/download" target="_blank" rel="noopener noreferrer" class="btn-link">App</a>
+          <a href="https://chromewebstore.google.com/detail/dashlane-%E2%80%94-password-manag/fdjamakpfbbddfjaooikfcpapjohcfmg?hl=en" target="_blank" rel="noopener noreferrer" class="btn-link">Extension</a>
+        </div>
+      </div>
     </div>
 
-    <!-- Step 1 -->
-    <div class="step-card">
-        <div class="step-header">
-            <span class="step-number">1</span>
-            <h2>Install an Approved Password Manager</h2>
-        </div>
-        <p style="margin: 0 0 8px 0; color: var(--text-muted);">Choose one of the following and install its app or browser extension:</p>
-        <ul>
-            <li><strong>1Password</strong> (<a href="https://1password.com/downloads" target="_blank" class="link">App</a> | <a href="https://chromewebstore.google.com/detail/1password-beta-%E2%80%93-password/khgocmkkpikpnmmkgmdnfckapcdkgfaf?hl=en" target="_blank" class="link">Browser Extension</a>)</li>
-            <li><strong>Bitwarden</strong> (<a href="https://bitwarden.com/download/" target="_blank" class="link">App</a> | <a href="https://chromewebstore.google.com/detail/bitwarden-password-manage/nngceckbapebfimnlniiiahkandclblb" target="_blank" class="link">Browser Extension</a>)</li>
-            <li><strong>LastPass</strong> (<a href="https://www.lastpass.com/download" target="_blank" class="link">App</a> | <a href="https://chromewebstore.google.com/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd" target="_blank" class="link">Browser Extension</a>)</li>
-            <li><strong>Dashlane</strong> (<a href="https://www.dashlane.com/download" target="_blank" class="link">App</a> | <a href="https://chromewebstore.google.com/detail/dashlane-%E2%80%94-password-manag/fdjamakpfbbddfjaooikfcpapjohcfmg?hl=en" target="_blank" class="link">Browser Extension</a>)</li>
-        </ul>
-        <div class="note-box">
-            💡 <strong>Crucial Step:</strong> Installing the browser extension in your primary work browser (Chrome, Safari, Edge, etc.) helps Vanta immediately detect compliance.
-        </div>
-        <label class="checkbox-wrapper">
-            <input type="checkbox"> I have installed the app or browser extension
-        </label>
+    <div class="note-box">
+      💡 <strong>Crucial Step:</strong> Installing the browser extension in your main browser (Chrome, Safari, Edge, etc.) enables Vanta to immediately verify compliance.
     </div>
 
-    <!-- Step 2 -->
-    <div class="step-card">
-        <div class="step-header">
-            <span class="step-number">2</span>
-            <h2>Keep the Vanta App Active</h2>
-        </div>
-        <p style="margin: 0; color: var(--text-muted);">Ensure the <strong>Vanta Device Monitor</strong> app is running in the background on your computer. It will automatically scan your system and report back that your device is secure.</p>
-        <div class="note-box" style="background-color: #F3F4F6; border-color: #9CA3AF; color: #374151;">
-            ✨ You don't need to manually send screenshots or evidence—Vanta handles it automatically!
-        </div>
-        <label class="checkbox-wrapper">
-            <input type="checkbox"> Vanta Device Monitor is running
-        </label>
+    <label class="checkbox-wrapper">
+      <input type="checkbox" onchange="toggleCard('card-1', this)" />
+      I have installed the app or browser extension
+    </label>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="step-card" id="card-2">
+    <div class="step-header">
+      <span class="step-number">2</span>
+      <h2>Keep the Vanta App Active</h2>
+    </div>
+    <p class="step-desc">
+      Ensure the <strong>Vanta Device Monitor</strong> app is running in the background on your system. It continuously scans and confirms your security setup automatically.
+    </p>
+
+    <div class="note-box gray">
+      ✨ <strong>Automated Verification:</strong> You do not need to send screenshots or manual evidence—Vanta updates in real time once active.
     </div>
 
-    <!-- Step 3 -->
-    <div class="step-card">
-        <div class="step-header">
-            <span class="step-number">3</span>
-            <h2>You're All Set!</h2>
-        </div>
-        <p style="margin: 0; color: var(--text-muted);">Once Vanta syncs, your device will automatically update to <strong>Compliant</strong> status in our dashboard.</p>
-        <label class="checkbox-wrapper">
-            <input type="checkbox"> Done!
-        </label>
-    </div>
+    <label class="checkbox-wrapper">
+      <input type="checkbox" onchange="toggleCard('card-2', this)" />
+      Vanta Device Monitor is running in background
+    </label>
+  </div>
 
-    <div class="footer">
-        Need help or have questions? <br>
-        Please reach out to the <strong>IT Support Team</strong>.
+  <!-- Step 3 -->
+  <div class="step-card" id="card-3">
+    <div class="step-header">
+      <span class="step-number">3</span>
+      <h2>Verification Complete</h2>
     </div>
+    <p class="step-desc">
+      Once Vanta syncs with your system, your machine status will automatically flip to <strong>Compliant</strong> on the IT security dashboard.
+    </p>
+
+    <label class="checkbox-wrapper">
+      <input type="checkbox" onchange="toggleCard('card-3', this)" />
+      I have completed all onboarding steps
+    </label>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    Need assistance or have questions? <br />
+    Please contact your <strong>IT Support Team</strong>.
+  </div>
+
 </div>
+
+<script>
+  function toggleCard(cardId, checkbox) {
+    const card = document.getElementById(cardId);
+    if (checkbox.checked) {
+      card.classList.add('completed');
+    } else {
+      card.classList.remove('completed');
+    }
+  }
+</script>
 
 </body>
 </html>
