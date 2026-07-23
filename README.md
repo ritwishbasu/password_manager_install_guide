@@ -1,36 +1,36 @@
-# Employee Password Manager Installation Guide
+# Security Compliance — Password Manager Setup
 
-An interactive, user-friendly webpage guide designed to assist employees in setting up an approved password manager to meet security compliance requirements (tracked via Vanta).
+A modern, responsive, and accessible web interface designed to guide team members through installing approved password managers and verifying background compliance services (e.g., Vanta Device Monitor).
 
-## 🚀 Live Site
-
-Access the live employee installation guide here:  
-👉 **[https://ritwishbasu.github.io/password_manager_install_guide/](https://ritwishbasu.github.io/password_manager_install_guide/)**
+Hosted live via **GitHub Pages**.
 
 ---
 
-## 📌 Purpose
+## ✨ Features
 
-This guide translates technical compliance directives into clear, step-by-step instructions for non-technical employees. It ensures that device security checks reported to Vanta pass smoothly across the organization.
-
-### Key Steps Covered
-1. **Choose & Install Approved Software:** Clear options for 1Password, Bitwarden, LastPass, and Dashlane (including desktop apps and browser extensions).
-2. **Background Verification:** Guidance on ensuring the Vanta Device Monitor agent remains active.
-3. **Automated Compliance Tracking:** Seamless background detection eliminating manual screenshot or evidence submissions.
-
----
-
-## 🛠️ Tech Stack & Structure
-
-- **HTML5 & CSS3:** Lightweight, standalone responsive webpage with interactive checklist functionality.
-- **Hosting:** Hosted via GitHub Pages directly from the `main` branch.
+* 🌓 **Dark / Light Mode:** Built-in theme toggle with auto-detection for system preferences and persistent local storage.
+* 🌐 **Multi-Language Support (i18n):** Seamless, instant language switching between:
+  * English
+  * Hindi (हिंदी)
+  * Bengali (বাংলা)
+* 🔒 **Direct Extension Links:** Verified, official links for top password managers (**1Password**, **Bitwarden**, **LastPass**, and **Dashlane**).
+* 💻 **Cross-Platform Guides:** Clear verification steps for Linux, macOS, and Windows system monitors.
+* 📱 **Fully Responsive:** Clean, modern CSS card layout built to look great on desktop and mobile.
 
 ---
 
-## 💻 Local Setup & Editing
+## 🚀 Live Demo
 
-To modify or update the guide locally:
+Check out the live page on GitHub Pages:
+`https://<your-username>.github.io/<your-repository-name>/`
 
-1. Clone the repository:
+---
+
+## 🛠️ Local Development & Setup
+
+No dependencies or build steps are required! This is a lightweight, zero-framework static web page.
+
+1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/ritwishbasu/password_manager_install_guide.git](https://github.com/ritwishbasu/password_manager_install_guide.git)
+   git clone [https://github.com/](https://github.com/)<your-username>/<your-repository-name>.git
+   cd <your-repository-name>
