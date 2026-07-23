@@ -108,8 +108,18 @@
         }
 
         li {
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             color: var(--text-muted);
+        }
+
+        a.link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a.link:hover {
+            text-decoration: underline;
         }
 
         .note-box {
@@ -151,16 +161,6 @@
             font-size: 14px;
             color: var(--text-muted);
         }
-
-        .footer a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
-        }
     </style>
 </head>
 <body>
@@ -172,7 +172,7 @@
         <p class="subtitle">Please complete these steps to ensure your work computer meets security compliance standards.</p>
     </div>
 
-<!-- Step 1 -->
+    <!-- Step 1 -->
     <div class="step-card">
         <div class="step-header">
             <span class="step-number">1</span>
@@ -180,13 +180,13 @@
         </div>
         <p style="margin: 0 0 8px 0; color: var(--text-muted);">Choose one of the following and install its app or browser extension:</p>
         <ul>
-            <li><strong>1Password</strong> (<a href="https://1password.com/downloads" target="_blank">App</a> | <a href="https://chromewebstore.google.com/detail/1password-%E2%80%93-password-mana/aeblfdkhhhdcdjpifhhbdiojplfnnaco" target="_blank">Browser Extension</a>)</li>
-            <li><strong>Bitwarden</strong> (<a href="https://bitwarden.com/download/" target="_blank">App</a> | <a href="https://chromewebstore.google.com/detail/bitwarden-password-manage/nngceckbapebfimnlniiiahkandclblb" target="_blank">Browser Extension</a>)</li>
-            <li><strong>LastPass</strong> (<a href="https://www.lastpass.com/download" target="_blank">App</a> | <a href="https://chromewebstore.google.com/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd" target="_blank">Browser Extension</a>)</li>
-            <li><strong>Dashlane</strong> (<a href="https://www.dashlane.com/download" target="_blank">App</a> | <a href="https://chromewebstore.google.com/detail/dashlane-password-manager/fdjamakpfbbddfjaooikfcpajjieimid" target="_blank">Browser Extension</a>)</li>
+            <li><strong>1Password</strong> (<a href="https://1password.com/downloads" target="_blank" class="link">App</a> | <a href="https://chromewebstore.google.com/detail/1password-%E2%80%93-password-mana/aeblfdkhhhdcdjpifhhbdiojplfnnaco" target="_blank" class="link">Browser Extension</a>)</li>
+            <li><strong>Bitwarden</strong> (<a href="https://bitwarden.com/download/" target="_blank" class="link">App</a> | <a href="https://chromewebstore.google.com/detail/bitwarden-password-manage/nngceckbapebfimnlniiiahkandclblb" target="_blank" class="link">Browser Extension</a>)</li>
+            <li><strong>LastPass</strong> (<a href="https://www.lastpass.com/download" target="_blank" class="link">App</a> | <a href="https://chromewebstore.google.com/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd" target="_blank" class="link">Browser Extension</a>)</li>
+            <li><strong>Dashlane</strong> (<a href="https://www.dashlane.com/download" target="_blank" class="link">App</a> | <a href="https://chromewebstore.google.com/detail/dashlane-password-manager/fdjamakpfbbddfjaooikfcpajjieimid" target="_blank" class="link">Browser Extension</a>)</li>
         </ul>
         <div class="note-box">
-            💡 <strong>Note:</strong> Installing the browser extension in your primary work browser (Chrome, Edge, Safari) is the easiest way for Vanta to detect compliance!
+            💡 <strong>Crucial Step:</strong> Installing the browser extension in your primary work browser (Chrome, Safari, Edge, etc.) helps Vanta immediately detect compliance.
         </div>
         <label class="checkbox-wrapper">
             <input type="checkbox"> I have installed the app or browser extension
