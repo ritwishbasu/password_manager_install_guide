@@ -1,519 +1,401 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Security Compliance — Password Manager Setup</title>
   <style>
-    /* Color Variables & Theme Configurations */
     :root {
-      --bg: #f1f5f9;
-      --card-bg: #ffffff;
-      --card-sub-bg: #f8fafc;
-      --text-main: #0f172a;
-      --text-muted: #475569;
-      --border: #e2e8f0;
-      --border-hover: #cbd5e1;
-      
-      /* Vibrant Accents */
-      --primary: #4f46e5;
-      --primary-hover: #4338ca;
-      --primary-light: #eef2ff;
-      --primary-glow: rgba(79, 70, 229, 0.15);
-      
-      --badge-bg: #eef2ff;
-      --badge-border: #c7d2fe;
-
-      --radius: 14px;
-      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
-      --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
-    }
-
-    [data-theme="dark"] {
-      --bg: #0b0f19;
+      --bg-color: #0b0f17;
       --card-bg: #111827;
-      --card-sub-bg: #1f2937;
+      --card-border: #1f2937;
       --text-main: #f9fafb;
       --text-muted: #9ca3af;
-      --border: #1f2937;
-      --border-hover: #374151;
-      
-      /* Glowing Electric Accents for Dark Mode */
-      --primary: #6366f1;
-      --primary-hover: #818cf8;
-      --primary-light: rgba(99, 102, 241, 0.15);
-      --primary-glow: rgba(99, 102, 241, 0.25);
-
-      --badge-bg: rgba(99, 102, 241, 0.2);
-      --badge-border: rgba(99, 102, 241, 0.4);
-
-      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-      --shadow-md: 0 12px 30px -5px rgba(0, 0, 0, 0.5);
+      --accent: #6366f1;
+      --accent-hover: #4f46e5;
+      --badge-bg: #1e1b4b;
+      --badge-text: #818cf8;
+      --inner-card: #1f2937;
+      --code-bg: #374151;
     }
 
-    * { box-sizing: border-box; }
+    [data-theme="light"] {
+      --bg-color: #f3f4f6;
+      --card-bg: #ffffff;
+      --card-border: #e5e7eb;
+      --text-main: #111827;
+      --text-muted: #4b5563;
+      --accent: #4f46e5;
+      --accent-hover: #4338ca;
+      --badge-bg: #e0e7ff;
+      --badge-text: #3730a3;
+      --inner-card: #f9fafb;
+      --code-bg: #e5e7eb;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
-      background-color: var(--bg);
+      background-color: var(--bg-color);
       color: var(--text-main);
-      line-height: 1.5;
-      margin: 0;
-      padding: 40px 20px;
       display: flex;
       justify-content: center;
+      padding: 2rem 1rem;
       min-height: 100vh;
-      transition: background-color 0.25s ease, color 0.25s ease;
-      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.3s, color 0.3s;
     }
 
-    .container { max-width: 680px; width: 100%; }
+    .wrapper {
+      width: 100%;
+      max-width: 720px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
 
-    /* Top Controls Bar */
-    .top-bar {
+    .top-controls {
       display: flex;
       justify-content: flex-end;
-      gap: 10px;
-      margin-bottom: 16px;
+      gap: 0.75rem;
     }
 
-    .theme-toggle-btn, .lang-select {
+    select, .theme-toggle {
       background: var(--card-bg);
-      border: 1px solid var(--border);
       color: var(--text-main);
-      padding: 8px 14px;
-      border-radius: 20px;
-      font-size: 13px;
-      font-weight: 600;
+      border: 1px solid var(--card-border);
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
       cursor: pointer;
+      font-size: 0.875rem;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 2rem;
+    }
+
+    .header-card {
+      text-align: center;
+    }
+
+    .icon-wrapper {
+      width: 48px;
+      height: 48px;
+      background: var(--badge-bg);
+      color: var(--badge-text);
+      border-radius: 50%;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      box-shadow: var(--shadow-sm);
-      transition: all 0.2s ease;
-      outline: none;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
     }
 
-    .lang-select {
-      border-radius: 12px;
-      padding-right: 10px;
+    h1 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    h2 { font-size: 1.125rem; font-weight: 600; }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 0.9rem;
     }
 
-    .theme-toggle-btn:hover, .lang-select:hover {
-      border-color: var(--primary);
-      box-shadow: 0 0 12px var(--primary-glow);
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
     }
-
-    /* Header */
-    .header {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 36px 32px;
-      text-align: center;
-      margin-bottom: 24px;
-      box-shadow: var(--shadow-md);
-      position: relative;
-      overflow: hidden;
-      transition: background-color 0.25s ease, border-color 0.25s ease;
-    }
-
-    .header::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0; height: 4px;
-      background: linear-gradient(90deg, #4f46e5, #8b5cf6, #06b6d4, #10b981);
-    }
-
-    .icon-badge {
-      width: 56px; height: 56px;
-      background: var(--badge-bg);
-      border: 1px solid var(--badge-border);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 16px auto;
-      font-size: 26px;
-    }
-
-    h1 { font-size: 23px; font-weight: 700; margin: 0 0 8px 0; letter-spacing: -0.02em; }
-    p.subtitle { color: var(--text-muted); font-size: 14px; margin: 0; }
-
-    /* Step Cards */
-    .step-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 28px;
-      margin-bottom: 20px;
-      box-shadow: var(--shadow-sm);
-      transition: all 0.2s ease-in-out;
-    }
-
-    .step-card:hover {
-      border-color: var(--border-hover);
-      box-shadow: var(--shadow-md);
-    }
-
-    .step-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
 
     .step-number {
-      background: var(--primary-light);
-      color: var(--primary);
-      font-weight: 700;
-      font-size: 13px;
-      width: 30px; height: 30px;
+      background: var(--badge-bg);
+      color: var(--badge-text);
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      border: 1px solid var(--badge-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.875rem;
     }
 
-    h2 { font-size: 18px; font-weight: 600; margin: 0; }
-    .step-desc { color: var(--text-muted); font-size: 14px; margin: 0 0 20px 0; }
+    .step-desc {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      margin-bottom: 1.25rem;
+    }
 
-    /* Options Grid */
     .options-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 12px;
-      margin-bottom: 20px;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 550px) {
+      .options-grid { grid-template-columns: 1fr; }
     }
 
     .option-card {
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px 16px;
-      display: flex; align-items: center; justify-content: space-between;
-      background: var(--card-sub-bg);
-      transition: all 0.15s ease;
+      background-color: var(--inner-card);
+      padding: 1rem;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    .option-card:hover {
-      border-color: var(--primary);
-      box-shadow: 0 0 10px var(--primary-glow);
-    }
+    .option-name { font-weight: 600; font-size: 0.95rem; }
 
-    .option-name { font-weight: 600; font-size: 14px; }
-    .btn-group { display: flex; gap: 6px; }
+    .btn-group { display: flex; gap: 0.5rem; }
 
     .btn-link {
-      display: inline-flex; align-items: center;
-      padding: 6px 12px; font-size: 12px; font-weight: 600;
-      color: #ffffff; background: var(--primary);
-      border: none; border-radius: 6px;
-      text-decoration: none; transition: all 0.15s ease;
+      background-color: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      padding: 0.35rem 0.65rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 500;
     }
 
-    .btn-link:hover {
-      background: var(--primary-hover);
-      transform: translateY(-1px);
+    .btn-link:hover { background-color: var(--accent-hover); }
+
+    .inner-box {
+      background-color: var(--inner-card);
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
     }
 
-    /* Verification Box */
-    .agent-monitor-box {
-      background: var(--card-sub-bg);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 18px;
-      margin-top: 16px;
+    .inner-box h3 {
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .inner-box ul {
+      list-style-position: inside;
+      color: var(--text-muted);
+      font-size: 0.85rem;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-    }
-
-    .monitor-title {
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .verify-list {
-      margin: 4px 0 0 0;
-      padding-left: 20px;
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-
-    .verify-list li {
-      margin-bottom: 4px;
+      gap: 0.5rem;
     }
 
     code {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      padding: 2px 6px;
+      background-color: var(--code-bg);
+      padding: 0.15rem 0.35rem;
       border-radius: 4px;
       font-family: monospace;
-      font-size: 12px;
-      color: var(--primary);
+      color: var(--text-main);
     }
 
-    /* Checkbox Styles */
     .checkbox-wrapper {
-      display: flex; align-items: center; gap: 12px;
-      margin-top: 20px; padding-top: 16px;
-      border-top: 1px solid var(--border);
-      cursor: pointer; user-select: none;
-      font-size: 14px; font-weight: 500; color: var(--text-muted);
-      transition: color 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      cursor: pointer;
     }
 
-    .checkbox-wrapper:hover { color: var(--text-main); }
-    .checkbox-wrapper input { width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer; }
-
-    .footer { text-align: center; margin-top: 32px; padding-top: 20px; font-size: 13px; color: var(--text-muted); }
+    .checkbox-wrapper input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
 
-<div class="container">
-
-  <!-- Top Controls Bar -->
-  <div class="top-bar">
-    <!-- Language Selector -->
-    <select class="lang-select" id="lang-select" onchange="changeLanguage(this.value)">
-      <option value="en">🌐 English</option>
-      <option value="hi">🌐 हिंदी (Hindi)</option>
-      <option value="bn">🌐 বাংলা (Bengali)</option>
-    </select>
-
-    <!-- Theme Toggle -->
-    <button class="theme-toggle-btn" onclick="toggleTheme()">
-      <span id="theme-icon">🌙</span>
-      <span id="theme-text">Dark Mode</span>
-    </button>
-  </div>
-
-  <!-- Header -->
-  <div class="header">
-    <div class="icon-badge">🔒</div>
-    <h1 data-i18n="main_title">Action Required: Password Manager Setup</h1>
-    <p class="subtitle" data-i18n="main_subtitle">Complete these steps to verify compliance for your work computer.</p>
-  </div>
-
-  <!-- Step 1 -->
-  <div class="step-card">
-    <div class="step-header">
-      <span class="step-number">1</span>
-      <h2 data-i18n="step1_title">Install only one out of these Approved Password Managers</h2>
+  <div class="wrapper">
+    <div class="top-controls">
+      <select id="lang-select">
+        <option value="en">English</option>
+        <option value="hi">हिंदी</option>
+        <option value="bn">বাংলা</option>
+      </select>
+      <button class="theme-toggle" id="theme-toggle">🌓 Theme</button>
     </div>
-    <p class="step-desc" data-i18n="step1_desc">Select only one authorized password manager out of these choices and install its desktop app and browser extension:</p>
-    
-    <div class="options-grid">
-      <div class="option-card">
-        <span class="option-name">1Password</span>
-        <div class="btn-group">
-          <a href="https://1password.com/downloads" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="btn_app">App</a>
-          <a href="https://chromewebstore.google.com/detail/1password-beta-%E2%80%93-password/khgocmkkpikpnmmkgmdnfckapcdkgfaf?hl=en" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="btn_ext">Extension</a>
+
+    <!-- Header Card -->
+    <div class="card header-card">
+      <div class="icon-wrapper">🔒</div>
+      <h1 data-i18n="header_title">Action Required: Password Manager Setup</h1>
+      <p class="subtitle" data-i18n="header_desc">Complete these steps to verify compliance for your work computer.</p>
+    </div>
+
+    <!-- Step 1 -->
+    <div class="card">
+      <div class="step-header">
+        <span class="step-number">1</span>
+        <h2 data-i18n="step1_title">Install only one out of these Approved Password Managers</h2>
+      </div>
+      <p class="step-desc" data-i18n="step1_desc">Select only one authorized password manager out of those choices and install its desktop app and browser extension:</p>
+
+      <div class="options-grid">
+        <div class="option-card">
+          <span class="option-name">1Password</span>
+          <div class="btn-group">
+            <a href="https://1password.com/downloads" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="btn_app">App</a>
+            <a href="https://chromewebstore.google.com/detail/1password-beta-%E2%80%93-password/khgocmkkpikpnmmkgmdnfckapcdkgfaf?hl=en" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="btn_ext">Extension</a>
+          </div>
+        </div>
+
+        <div class="option-card">
+          <span class="option-name">Bitwarden</span>
+          <div class="btn-group">
+            <a href="https://bitwarden.com/download/" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="btn_app">App</a>
+            <a href="https://chromewebstore.google.com/detail/bitwarden-password-manage/nngceckbapebfimnlniiiahkandclblb" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="btn_ext">Extension</a>
+          </div>
+        </div>
+
+        <div class="option-card">
+          <span class="option-name">LastPass</span>
+          <div class="btn-group">
+            <a href="https://www.lastpass.com/download" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="btn_app">App</a>
+            <a href="https://chromewebstore.google.com/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="btn_ext">Extension</a>
+          </div>
+        </div>
+
+        <div class="option-card">
+          <span class="option-name">Dashlane</span>
+          <div class="btn-group">
+            <a href="https://www.dashlane.com/download" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="btn_app">App</a>
+            <a href="https://chromewebstore.google.com/detail/dashlane-%E2%80%94-password-manag/fdjamakpfbbddfjaooikfcpapjohcfmg?hl=en" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="btn_ext">Extension</a>
+          </div>
         </div>
       </div>
 
-      <div class="option-card">
-        <span class="option-name">Bitwarden</span>
-        <div class="btn-group">
-          <a href="https://bitwarden.com/download/" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="btn_app">App</a>
-          <a href="https://chromewebstore.google.com/detail/bitwarden-password-manage/nngceckbapebfimnlniiiahkandclblb" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="btn_ext">Extension</a>
-        </div>
+      <label class="checkbox-wrapper">
+        <input type="checkbox" />
+        <span data-i18n="step1_check">I have installed the app and browser extension</span>
+      </label>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="card">
+      <div class="step-header">
+        <span class="step-number">2</span>
+        <h2 data-i18n="step2_title">Keep the Vanta App Active</h2>
+      </div>
+      <p class="step-desc" data-i18n="step2_desc">Ensure the Vanta Device Monitor app is running in the background on your system.</p>
+
+      <div class="inner-box">
+        <h3 data-i18n="vanta_verify_title">How to verify Vanta is active on your machine:</h3>
+        <ul>
+          <li><strong>Linux:</strong> <span data-i18n="vanta_linux">Run</span> <code>sudo /var/vanta/vanta-cli status</code> <span data-i18n="in_terminal">in Terminal</span></li>
+          <li><strong>macOS:</strong> <span data-i18n="vanta_mac">Open Activity Monitor and look for Vanta</span></li>
+          <li><strong>Windows:</strong> <span data-i18n="vanta_win">Open Task Manager and look for Vanta Device Monitor</span></li>
+        </ul>
       </div>
 
-      <div class="option-card">
-        <span class="option-name">LastPass</span>
-        <div class="btn-group">
-          <a href="https://www.lastpass.com/download" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="btn_app">App</a>
-          <a href="https://chromewebstore.google.com/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="btn_ext">Extension</a>
-        </div>
-      </div>
-
-      <div class="option-card">
-        <span class="option-name">Dashlane</span>
-        <div class="btn-group">
-          <a href="https://www.dashlane.com/download" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="btn_app">App</a>
-          <a href="https://chromewebstore.google.com/detail/dashlane-%E2%80%94-password-manag/fdjamakpfbbddfjaooikfcpapjohcfmg?hl=en" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="btn_ext">Extension</a>
-        </div>
-      </div>
+      <label class="checkbox-wrapper">
+        <input type="checkbox" />
+        <span data-i18n="step2_check">I have confirmed Vanta Device Monitor is running in the background</span>
+      </label>
     </div>
-
-    <label class="checkbox-wrapper">
-      <input type="checkbox" /> <span data-i18n="step1_check">I have installed the app and browser extension</span>
-    </label>
   </div>
 
-  <!-- Step 2 -->
-  <div class="step-card">
-    <div class="step-header">
-      <span class="step-number">2</span>
-      <h2 data-i18n="step2_title">Keep the Vanta App Active</h2>
-    </div>
-    <p class="step-desc" data-i18n="step2_desc">
-      Ensure the <strong>Vanta Device Monitor</strong> app is running in the background on your system.
-    </p>
-
-    <div class="agent-monitor-box">
-      <span class="monitor-title" data-i18n="verify_title">How to verify Vanta is active on your machine:</span>
-      <ul class="verify-list">
-        <li><strong>Linux:</strong> <span data-i18n="verify_linux">Run</span> <code>sudo /var/vanta/vanta-cli status</code> <span data-i18n="verify_terminal">in Terminal</span></li>
-        <li><strong>macOS:</strong> <span data-i18n="verify_mac">Open Activity Monitor and look for Vanta</span></li>
-        <li><strong>Windows:</strong> <span data-i18n="verify_win">Open Task Manager and look for Vanta Device Monitor</span></li>
-      </ul>
-    </div>
-
-    <label class="checkbox-wrapper">
-      <input type="checkbox" id="vanta-check" />
-      <span data-i18n="step2_check">I have confirmed Vanta Device Monitor is running in the background</span>
-    </label>
-  </div>
-
-  <!-- Step 3 -->
-  <div class="step-card">
-    <div class="step-header">
-      <span class="step-number">3</span>
-      <h2 data-i18n="step3_title">Verification Complete</h2>
-    </div>
-    <p class="step-desc" data-i18n="step3_desc">
-      Once Vanta syncs, your machine status will automatically update to <strong>Compliant</strong> on the IT dashboard.
-    </p>
-
-    <label class="checkbox-wrapper">
-      <input type="checkbox" /> <span data-i18n="step3_check">I have completed all onboarding steps</span>
-    </label>
-  </div>
-
-  <div class="footer">
-    <span data-i18n="footer_need_help">Need assistance or have questions?</span> <br />
-    <span data-i18n="footer_contact">Please contact your</span> <strong>IT Support Team</strong>.
-  </div>
-
-</div>
-
-<script>
-  // Translation Dictionary
-  const translations = {
-    en: {
-      theme_dark: "Dark Mode",
-      theme_light: "Light Mode",
-      main_title: "Action Required: Password Manager Setup",
-      main_subtitle: "Complete these steps to verify compliance for your work computer.",
-      step1_title: "Install an Approved Password Manager",
-      step1_desc: "Select an authorized password manager and install its desktop app or browser extension:",
-      btn_app: "App",
-      btn_ext: "Extension",
-      step1_check: "I have installed the app or browser extension",
-      step2_title: "Keep the Vanta App Active",
-      step2_desc: "Ensure the Vanta Device Monitor app is running in the background on your system.",
-      verify_title: "How to verify Vanta is active on your machine:",
-      verify_linux: "Run",
-      verify_terminal: "in Terminal",
-      verify_mac: "Open Activity Monitor and look for Vanta",
-      verify_win: "Open Task Manager and look for Vanta Device Monitor",
-      step2_check: "I have confirmed Vanta Device Monitor is running in the background",
-      step3_title: "Verification Complete",
-      step3_desc: "Once Vanta syncs, your machine status will automatically update to Compliant on the IT dashboard.",
-      step3_check: "I have completed all onboarding steps",
-      footer_need_help: "Need assistance or have questions?",
-      footer_contact: "Please contact your"
-    },
-    hi: {
-      theme_dark: "डार्क मोड",
-      theme_light: "लाइट मोड",
-      main_title: "आवश्यक कार्रवाई: पासवर्ड मैनेजर सेटअप",
-      main_subtitle: "अपने कार्य कंप्यूटर के लिए अनुपालन सत्यापित करने हेतु ये चरण पूरे करें।",
-      step1_title: "1. स्वीकृत पासवर्ड मैनेजर इंस्टॉल करें",
-      step1_desc: "किसी अधिकृत पासवर्ड मैनेजर को चुनें और उसका डेस्कटॉप ऐप या ब्राउज़र एक्सटेंशन इंस्टॉल करें:",
-      btn_app: "ऐप",
-      btn_ext: "एक्सटेंशन",
-      step1_check: "मैंने ऐप या ब्राउज़र एक्सटेंशन इंस्टॉल कर लिया है",
-      step2_title: "2. वंता ऐप को सक्रिय रखें",
-      step2_desc: "सुनिश्चित करें कि Vanta Device Monitor ऐप आपके सिस्टम पर बैकग्राउंड में चल रहा है।",
-      verify_title: "अपनी मशीन पर वंता के सक्रिय होने की जांच कैसे करें:",
-      verify_linux: "टर्मिनल में चलाएं:",
-      verify_terminal: "",
-      verify_mac: "Activity Monitor खोलें और Vanta खोजें",
-      verify_win: "Task Manager खोलें और Vanta Device Monitor खोजें",
-      step2_check: "मैंने पुष्टि की है कि Vanta Device Monitor बैकग्राउंड में चल रहा है",
-      step3_title: "3. सत्यापन पूर्ण हुआ",
-      step3_desc: "जैसे ही वंता सिंक होगा, आपकी मशीन की स्थिति आईटी डैशबोर्ड पर स्वतः अनुपालन (Compliant) के रूप में अपडेट हो जाएगी।",
-      step3_check: "मैंने ऑनबोर्डिंग के सभी चरण पूरे कर लिए हैं",
-      footer_need_help: "सहायता की आवश्यकता है या कोई प्रश्न है?",
-      footer_contact: "कृपया अपनी"
-    },
-    bn: {
-      theme_dark: "ডার্ক মোড",
-      theme_light: "লাইট মোড",
-      main_title: "প্রয়োজনীয় কাজ: পাসওয়ার্ড ম্যানেজার সেটআপ",
-      main_subtitle: "আপনার কাজের কম্পিউটারের সম্মতি যাচাই করতে এই পদক্ষেপগুলি সম্পন্ন করুন।",
-      step1_title: "১. অনুমোদিত পাসওয়ার্ড ম্যানেজার ইনস্টল করুন",
-      step1_desc: "একটি অনুমোদিত পাসওয়ার্ড ম্যানেজার নির্বাচন করুন এবং এর ডেস্কটপ অ্যাপ বা ব্রাউজার এক্সটেনশন ইনস্টল করুন:",
-      btn_app: "অ্যাপ",
-      btn_ext: "এক্সটেনশন",
-      step1_check: "আমি অ্যাপ বা ব্রাউজার এক্সটেনশন ইনস্টল করেছি",
-      step2_title: "২. ভান্টা (Vanta) অ্যাপ সক্রিয় রাখুন",
-      step2_desc: "নিশ্চিত করুন যে Vanta Device Monitor অ্যাপটি আপনার সিস্টেমে ব্যাকগ্রাউন্ডে চলছে।",
-      verify_title: "আপনার কম্পিউটারে ভান্টা সক্রিয় আছে কিনা তা যাচাই করার উপায়:",
-      verify_linux: "টার্মিনালে রান করুন:",
-      verify_terminal: "",
-      verify_mac: "Activity Monitor খুলুন এবং Vanta খুঁজুন",
-      verify_win: "Task Manager খুলুন এবং Vanta Device Monitor খুঁজুন",
-      step2_check: "আমি নিশ্চিত করেছি যে Vanta Device Monitor ব্যাকগ্রাউন্ডে চলছে",
-      step3_title: "৩. যাচাইকরণ সম্পন্ন হয়েছে",
-      step3_desc: "ভান্টা সিঙ্ক হওয়ার পরে, আপনার কম্পিউটারের স্ট্যাটাস আইটি ড্যাশবোর্ডে স্বয়ংক্রিয়ভাবে সামঞ্জস্যপূর্ণ (Compliant) হিসেবে আপডেট হবে।",
-      step3_check: "আমি সব অনবোর্ডিং পদক্ষেপ সম্পন্ন করেছি",
-      footer_need_help: "সহায়তার প্রয়োজন বা কোন প্রশ্ন আছে?",
-      footer_contact: "দয়া করে আপনার যোগাযোগ করুন"
-    }
-  };
-
-  // Switch Language Function
-  function changeLanguage(lang) {
-    localStorage.setItem('lang', lang);
-    const elements = document.querySelectorAll('[data-i18n]');
-    
-    elements.forEach(el => {
-      const key = el.getAttribute('data-i18n');
-      if (translations[lang] && translations[lang][key]) {
-        el.innerText = translations[lang][key];
+  <script>
+    const translations = {
+      en: {
+        header_title: "Action Required: Password Manager Setup",
+        header_desc: "Complete these steps to verify compliance for your work computer.",
+        step1_title: "Install only one out of these Approved Password Managers",
+        step1_desc: "Select only one authorized password manager out of those choices and install its desktop app and browser extension:",
+        btn_app: "App",
+        btn_ext: "Extension",
+        step1_check: "I have installed the app and browser extension",
+        step2_title: "Keep the Vanta App Active",
+        step2_desc: "Ensure the Vanta Device Monitor app is running in the background on your system.",
+        vanta_verify_title: "How to verify Vanta is active on your machine:",
+        vanta_linux: "Run",
+        in_terminal: "in Terminal",
+        vanta_mac: "Open Activity Monitor and look for Vanta",
+        vanta_win: "Open Task Manager and look for Vanta Device Monitor",
+        step2_check: "I have confirmed Vanta Device Monitor is running in the background"
+      },
+      hi: {
+        header_title: "कार्रवाई आवश्यक: पासवर्ड मैनेजर सेटअप",
+        header_desc: "अपने कार्य कंप्यूटर के अनुपालन की पुष्टि के लिए इन चरणों को पूरा करें।",
+        step1_title: "इन स्वीकृत पासवर्ड प्रबंधकों में से केवल एक स्थापित करें",
+        step1_desc: "इन विकल्पों में से केवल एक अधिकृत पासवर्ड प्रबंधक चुनें और उसका डेस्कटॉप ऐप और ब्राउज़र एक्सटेंशन इंस्टॉल करें:",
+        btn_app: "ऐप",
+        btn_ext: "एक्सटेंशन",
+        step1_check: "मैंने ऐप और ब्राउज़र एक्सटेंशन इंस्टॉल कर लिया है",
+        step2_title: "Vanta ऐप को सक्रिय रखें",
+        step2_desc: "सुनिश्चित करें कि Vanta डिवाइस मॉनिटर ऐप आपके सिस्टम पर बैकग्राउंड में चल रहा है।",
+        vanta_verify_title: "जांचें कि Vanta आपकी मशीन पर सक्रिय है या नहीं:",
+        vanta_linux: "टर्मिनल में चलाएं",
+        in_terminal: "",
+        vanta_mac: "एक्टिविटी मॉनिटर खोलें और Vanta खोजें",
+        vanta_win: "टास्क मैनेजर खोलें और Vanta डिवाइस मॉनिटर खोजें",
+        step2_check: "मैंने पुष्टि की है कि Vanta डिवाइस मॉनिटर बैकग्राउंड में चल रहा है"
+      },
+      bn: {
+        header_title: "পদক্ষেপ প্রয়োজন: পাসওয়ার্ড ম্যানেজার সেটআপ",
+        header_desc: "আপনার কাজের কম্পিউটারের সম্মতি যাচাই করতে এই পদক্ষেপগুলি সম্পন্ন করুন।",
+        step1_title: "এই অনুমোদিত পাসওয়ার্ড ম্যানেজারগুলির মধ্যে কেবল একটি ইনস্টল করুন",
+        step1_desc: "এই বিকল্পগুলির মধ্য থেকে কেবল একটি অনুমোদিত পাসওয়ার্ড ম্যানেজার নির্বাচন করুন এবং এর ডেক্সটপ অ্যাপ এবং ব্রাউজার এক্সটেন্সন ইনস্টল করুন:",
+        btn_app: "অ্যাপ",
+        btn_ext: "এক্সটেনশন",
+        step1_check: "আমি অ্যাপ এবং ব্রাউজার এক্সটেনশন ইনস্টল করেছি",
+        step2_title: "Vanta অ্যাপটি সক্রিয় রাখুন",
+        step2_desc: "নিশ্চিত করুন যে Vanta ডিভাইস মনিটর অ্যাপটি আপনার সিস্টেমে ব্যাকগ্রাউন্ডে চলছে।",
+        vanta_verify_title: "আপনার মেশিনে Vanta সক্রিয় কিনা তা যেভাবে পরীক্ষা করবেন:",
+        vanta_linux: "টার্মিনালে চালান",
+        in_terminal: "",
+        vanta_mac: "অ্যাক্টিভিটি মনিটর খুলুন এবং Vanta খুঁজুন",
+        vanta_win: "টাস্ক ম্যানেজার খুলুন এবং Vanta ডিভাইস মনিটর খুঁজুন",
+        step2_check: "আমি নিশ্চিত করেছি যে Vanta ডিভাইস মনিটর ব্যাকগ্রাউন্ডে চলছে"
       }
+    };
+
+    const langSelect = document.getElementById('lang-select');
+    const themeToggle = document.getElementById('theme-toggle');
+
+    function setLanguage(lang) {
+      document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+          element.textContent = translations[lang][key];
+        }
+      });
+      localStorage.setItem('preferred_lang', lang);
+    }
+
+    langSelect.addEventListener('change', (e) => {
+      setLanguage(e.target.value);
     });
 
-    // Update Theme Toggle Text
-    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-    const themeText = document.getElementById('theme-text');
-    themeText.innerText = currentTheme === 'dark' ? translations[lang].theme_light : translations[lang].theme_dark;
-  }
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = document.body.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      if (newTheme === 'dark') {
+        document.body.removeAttribute('data-theme');
+      } else {
+        document.body.setAttribute('data-theme', 'light');
+      }
+      localStorage.setItem('preferred_theme', newTheme);
+    });
 
-  // Theme Toggle Functionality
-  function toggleTheme() {
-    const htmlElem = document.documentElement;
-    const themeIcon = document.getElementById('theme-icon');
-    const themeText = document.getElementById('theme-text');
-    const currentLang = localStorage.getItem('lang') || 'en';
-    
-    if (htmlElem.getAttribute('data-theme') === 'dark') {
-      htmlElem.setAttribute('data-theme', 'light');
-      themeIcon.innerText = '🌙';
-      themeText.innerText = translations[currentLang].theme_dark;
-      localStorage.setItem('theme', 'light');
-    } else {
-      htmlElem.setAttribute('data-theme', 'dark');
-      themeIcon.innerText = '☀️';
-      themeText.innerText = translations[currentLang].theme_light;
-      localStorage.setItem('theme', 'dark');
+    // Initialize Language & Theme
+    const savedLang = localStorage.getItem('preferred_lang') || 'en';
+    const savedTheme = localStorage.getItem('preferred_theme') || 'dark';
+    langSelect.value = savedLang;
+    setLanguage(savedLang);
+    if (savedTheme === 'light') {
+      document.body.setAttribute('data-theme', 'light');
     }
-  }
-
-  // Initialize Language & Theme on Load
-  (function init() {
-    const savedTheme = localStorage.getItem('theme');
-    const savedLang = localStorage.getItem('lang') || 'en';
-    
-    document.getElementById('lang-select').value = savedLang;
-
-    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      document.getElementById('theme-icon').innerText = '☀️';
-    }
-
-    changeLanguage(savedLang);
-  })();
-</script>
-
+  </script>
 </body>
 </html>
