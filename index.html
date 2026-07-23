@@ -1,30 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Security Compliance — Password Manager Setup</title>
   <style>
+    /* Color Variables & Theme Configurations */
     :root {
-      --primary: #6366f1;
-      --primary-hover: #4f46e5;
-      --primary-light: #eef2ff;
-      --bg: #f8fafc;
+      --bg: #f1f5f9;
       --card-bg: #ffffff;
+      --card-sub-bg: #f8fafc;
       --text-main: #0f172a;
-      --text-muted: #64748b;
+      --text-muted: #475569;
       --border: #e2e8f0;
       --border-hover: #cbd5e1;
-      --success: #10b981;
+      
+      /* Vibrant Accents */
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --primary-light: #eef2ff;
+      --primary-glow: rgba(79, 70, 229, 0.15);
+      
+      --success: #059669;
       --success-bg: #ecfdf5;
-      --radius: 12px;
-      --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
-      --shadow-md: 0 10px 15px -3px rgba(15, 23, 42, 0.05), 0 4px 6px -4px rgba(15, 23, 42, 0.05);
+      --error: #dc2626;
+      --error-bg: #fef2f2;
+      --warning: #d97706;
+      --warning-bg: #fffbeb;
+
+      --badge-bg: #eef2ff;
+      --badge-border: #c7d2fe;
+
+      --radius: 14px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
     }
 
-    * {
-      box-sizing: border-box;
+    [data-theme="dark"] {
+      --bg: #0b0f19;
+      --card-bg: #111827;
+      --card-sub-bg: #1f2937;
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --border: #1f2937;
+      --border-hover: #374151;
+      
+      /* Glowing Electric Accents for Dark Mode */
+      --primary: #6366f1;
+      --primary-hover: #818cf8;
+      --primary-light: rgba(99, 102, 241, 0.15);
+      --primary-glow: rgba(99, 102, 241, 0.25);
+
+      --success: #10b981;
+      --success-bg: rgba(16, 185, 129, 0.12);
+      --error: #f87171;
+      --error-bg: rgba(248, 113, 113, 0.12);
+      --warning: #fbbf24;
+      --warning-bg: rgba(251, 191, 36, 0.12);
+
+      --badge-bg: rgba(99, 102, 241, 0.2);
+      --badge-border: rgba(99, 102, 241, 0.4);
+
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 12px 30px -5px rgba(0, 0, 0, 0.5);
     }
+
+    * { box-sizing: border-box; }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
@@ -36,64 +77,75 @@
       display: flex;
       justify-content: center;
       min-height: 100vh;
+      transition: background-color 0.25s ease, color 0.25s ease;
       -webkit-font-smoothing: antialiased;
     }
 
-    .container {
-      max-width: 680px;
-      width: 100%;
+    .container { max-width: 680px; width: 100%; }
+
+    /* Top Bar with Theme Toggle */
+    .top-bar {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 16px;
     }
 
-    /* Header Styling */
+    .theme-toggle-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+
+    .theme-toggle-btn:hover {
+      border-color: var(--primary);
+      box-shadow: 0 0 12px var(--primary-glow);
+    }
+
+    /* Header */
     .header {
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 32px;
+      padding: 36px 32px;
       text-align: center;
       margin-bottom: 24px;
       box-shadow: var(--shadow-md);
       position: relative;
       overflow: hidden;
+      transition: background-color 0.25s ease, border-color 0.25s ease;
     }
 
     .header::before {
       content: "";
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #6366f1, #8b5cf6, #3b82f6);
+      top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, #4f46e5, #8b5cf6, #06b6d4, #10b981);
     }
 
     .icon-badge {
-      width: 52px;
-      height: 52px;
-      background: var(--primary-light);
+      width: 56px; height: 56px;
+      background: var(--badge-bg);
+      border: 1px solid var(--badge-border);
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       margin: 0 auto 16px auto;
-      font-size: 24px;
+      font-size: 26px;
     }
 
-    h1 {
-      font-size: 22px;
-      font-weight: 700;
-      margin: 0 0 8px 0;
-      color: var(--text-main);
-      letter-spacing: -0.02em;
-    }
+    h1 { font-size: 23px; font-weight: 700; margin: 0 0 8px 0; letter-spacing: -0.02em; }
+    p.subtitle { color: var(--text-muted); font-size: 14px; margin: 0; }
 
-    p.subtitle {
-      color: var(--text-muted);
-      font-size: 14px;
-      margin: 0;
-    }
-
-    /* Step Card Styling */
+    /* Step Cards */
     .step-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
@@ -109,41 +161,24 @@
       box-shadow: var(--shadow-md);
     }
 
-    .step-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
+    .step-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
 
     .step-number {
       background: var(--primary-light);
       color: var(--primary);
       font-weight: 700;
       font-size: 13px;
-      width: 28px;
-      height: 28px;
+      width: 30px; height: 30px;
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
+      border: 1px solid var(--badge-border);
     }
 
-    h2 {
-      font-size: 17px;
-      font-weight: 600;
-      margin: 0;
-      color: var(--text-main);
-    }
+    h2 { font-size: 18px; font-weight: 600; margin: 0; }
+    .step-desc { color: var(--text-muted); font-size: 14px; margin: 0 0 20px 0; }
 
-    .step-desc {
-      color: var(--text-muted);
-      font-size: 14px;
-      margin: 0 0 20px 0;
-    }
-
-    /* Option Grid for Downloads */
+    /* Modernized Links & Options Grid */
     .options-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -153,124 +188,125 @@
 
     .option-card {
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 10px;
       padding: 12px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #fafafa;
-      transition: background 0.15s ease, border-color 0.15s ease;
-    }
-
-    .option-card:hover {
-      background: #ffffff;
-      border-color: var(--primary);
-    }
-
-    .option-name {
-      font-weight: 600;
-      font-size: 14px;
-      color: var(--text-main);
-    }
-
-    .btn-group {
-      display: flex;
-      gap: 6px;
-    }
-
-    .btn-link {
-      display: inline-flex;
-      align-items: center;
-      padding: 5px 10px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--primary);
-      background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      text-decoration: none;
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--card-sub-bg);
       transition: all 0.15s ease;
     }
 
+    .option-card:hover {
+      border-color: var(--primary);
+      box-shadow: 0 0 10px var(--primary-glow);
+    }
+
+    .option-name { font-weight: 600; font-size: 14px; }
+    .btn-group { display: flex; gap: 6px; }
+
+    .btn-link {
+      display: inline-flex; align-items: center;
+      padding: 6px 12px; font-size: 12px; font-weight: 600;
+      color: #ffffff; background: var(--primary);
+      border: none; border-radius: 6px;
+      text-decoration: none; transition: all 0.15s ease;
+    }
+
     .btn-link:hover {
-      background: var(--primary-light);
-      border-color: #c7d2fe;
-      color: var(--primary-hover);
+      background: var(--primary-hover);
+      transform: translateY(-1px);
     }
 
-    /* Note Box */
-    .note-box {
-      background-color: var(--primary-light);
-      border-left: 3px solid var(--primary);
-      padding: 12px 16px;
-      border-radius: 0 8px 8px 0;
-      font-size: 13px;
-      color: #3730a3;
+    /* Live Scanner Box */
+    .agent-monitor-box {
+      background: var(--card-sub-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
       margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
-    .note-box.gray {
-      background-color: #f1f5f9;
-      border-color: #94a3b8;
-      color: #334155;
-    }
-
-    /* Interactive Checkbox Wrapper */
-    .checkbox-wrapper {
+    .monitor-top {
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-top: 20px;
-      padding-top: 16px;
-      border-top: 1px solid var(--border);
-      cursor: pointer;
-      user-select: none;
+      justify-content: space-between;
+    }
+
+    .monitor-title {
       font-size: 14px;
-      font-weight: 500;
-      color: var(--text-muted);
-      transition: color 0.2s ease;
+      font-weight: 600;
     }
 
-    .checkbox-wrapper:hover {
-      color: var(--text-main);
-    }
-
-    .checkbox-wrapper input {
-      width: 18px;
-      height: 18px;
-      accent-color: var(--primary);
+    .btn-scan {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 7px 16px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
       cursor: pointer;
-      border-radius: 4px;
+      transition: all 0.15s ease;
     }
 
-    /* Active Completed State for Cards */
-    .step-card.completed {
-      border-color: #a7f3d0;
-      background-color: #fafdfb;
+    .btn-scan:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
     }
 
-    .step-card.completed .step-number {
-      background: var(--success-bg);
-      color: var(--success);
-    }
-
-    /* Footer */
-    .footer {
-      text-align: center;
-      margin-top: 32px;
-      padding-top: 20px;
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 20px;
       font-size: 13px;
+      font-weight: 600;
+      width: fit-content;
+      background: var(--border);
       color: var(--text-muted);
+      transition: all 0.2s ease;
     }
 
-    .footer strong {
-      color: var(--text-main);
+    .status-pill.running { background: var(--success-bg); color: var(--success); }
+    .status-pill.stopped { background: var(--error-bg); color: var(--error); }
+    .status-pill.checking { background: var(--warning-bg); color: var(--warning); }
+
+    .status-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: currentColor;
     }
+
+    /* Interactive Checkbox */
+    .checkbox-wrapper {
+      display: flex; align-items: center; gap: 12px;
+      margin-top: 20px; padding-top: 16px;
+      border-top: 1px solid var(--border);
+      cursor: pointer; user-select: none;
+      font-size: 14px; font-weight: 500; color: var(--text-muted);
+      transition: color 0.15s ease;
+    }
+
+    .checkbox-wrapper:hover { color: var(--text-main); }
+    .checkbox-wrapper input { width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer; }
+
+    .footer { text-align: center; margin-top: 32px; padding-top: 20px; font-size: 13px; color: var(--text-muted); }
   </style>
 </head>
 <body>
 
 <div class="container">
+
+  <!-- Top Bar with Dark Mode Toggle -->
+  <div class="top-bar">
+    <button class="theme-toggle-btn" onclick="toggleTheme()">
+      <span id="theme-icon">🌙</span>
+      <span id="theme-text">Dark Mode</span>
+    </button>
+  </div>
 
   <!-- Header -->
   <div class="header">
@@ -280,7 +316,7 @@
   </div>
 
   <!-- Step 1 -->
-  <div class="step-card" id="card-1">
+  <div class="step-card">
     <div class="step-header">
       <span class="step-number">1</span>
       <h2>Install an Approved Password Manager</h2>
@@ -321,53 +357,55 @@
       </div>
     </div>
 
-    <div class="note-box">
-      💡 <strong>Crucial Step:</strong> Installing the browser extension in your main browser (Chrome, Safari, Edge, etc.) enables Vanta to immediately verify compliance.
-    </div>
-
     <label class="checkbox-wrapper">
-      <input type="checkbox" onchange="toggleCard('card-1', this)" />
-      I have installed the app or browser extension
+      <input type="checkbox" /> I have installed the app or browser extension
     </label>
   </div>
 
   <!-- Step 2 -->
-  <div class="step-card" id="card-2">
+  <div class="step-card">
     <div class="step-header">
       <span class="step-number">2</span>
       <h2>Keep the Vanta App Active</h2>
     </div>
     <p class="step-desc">
-      Ensure the <strong>Vanta Device Monitor</strong> app is running in the background on your system. It continuously scans and confirms your security setup automatically.
+      Ensure the <strong>Vanta Device Monitor</strong> app is running in the background on your Windows, Mac, or Linux computer.
     </p>
 
-    <div class="note-box gray">
-      ✨ <strong>Automated Verification:</strong> You do not need to send screenshots or manual evidence—Vanta updates in real time once active.
+    <!-- Interactive Agent Scanner -->
+    <div class="agent-monitor-box">
+      <div class="monitor-top">
+        <span class="monitor-title">Live Agent Scanner (Win / Mac / Linux)</span>
+        <button class="btn-scan" onclick="scanLocalVantaAgent()">Scan Machine</button>
+      </div>
+      
+      <div id="vanta-status-pill" class="status-pill">
+        <span class="status-dot"></span>
+        <span id="vanta-status-text">Status: Not Scanned</span>
+      </div>
     </div>
 
     <label class="checkbox-wrapper">
-      <input type="checkbox" onchange="toggleCard('card-2', this)" />
+      <input type="checkbox" id="vanta-check" />
       Vanta Device Monitor is running in background
     </label>
   </div>
 
   <!-- Step 3 -->
-  <div class="step-card" id="card-3">
+  <div class="step-card">
     <div class="step-header">
       <span class="step-number">3</span>
       <h2>Verification Complete</h2>
     </div>
     <p class="step-desc">
-      Once Vanta syncs with your system, your machine status will automatically flip to <strong>Compliant</strong> on the IT security dashboard.
+      Once Vanta syncs, your machine status will automatically update to <strong>Compliant</strong> on the IT dashboard.
     </p>
 
     <label class="checkbox-wrapper">
-      <input type="checkbox" onchange="toggleCard('card-3', this)" />
-      I have completed all onboarding steps
+      <input type="checkbox" /> I have completed all onboarding steps
     </label>
   </div>
 
-  <!-- Footer -->
   <div class="footer">
     Need assistance or have questions? <br />
     Please contact your <strong>IT Support Team</strong>.
@@ -376,12 +414,70 @@
 </div>
 
 <script>
-  function toggleCard(cardId, checkbox) {
-    const card = document.getElementById(cardId);
-    if (checkbox.checked) {
-      card.classList.add('completed');
+  // Theme Toggle Functionality
+  function toggleTheme() {
+    const htmlElem = document.documentElement;
+    const themeIcon = document.getElementById('theme-icon');
+    const themeText = document.getElementById('theme-text');
+    
+    if (htmlElem.getAttribute('data-theme') === 'dark') {
+      htmlElem.setAttribute('data-theme', 'light');
+      themeIcon.innerText = '🌙';
+      themeText.innerText = 'Dark Mode';
+      localStorage.setItem('theme', 'light');
     } else {
-      card.classList.remove('completed');
+      htmlElem.setAttribute('data-theme', 'dark');
+      themeIcon.innerText = '☀️';
+      themeText.innerText = 'Light Mode';
+      localStorage.setItem('theme', 'dark');
+    }
+  }
+
+  // Load Saved Preference
+  (function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      document.getElementById('theme-icon').innerText = '☀️';
+      document.getElementById('theme-text').innerText = 'Light Mode';
+    }
+  })();
+
+  // Live Agent Scanner
+  async function scanLocalVantaAgent() {
+    const statusPill = document.getElementById('vanta-status-pill');
+    const statusText = document.getElementById('vanta-status-text');
+    const checkbox = document.getElementById('vanta-check');
+
+    statusPill.className = 'status-pill checking';
+    statusText.innerText = 'Scanning system ports...';
+
+    const LOCAL_PORTS = [5000, 8080, 28182];
+    let detected = false;
+
+    for (let port of LOCAL_PORTS) {
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 1200);
+
+        await fetch(`http://127.0.0.1:${port}/health`, {
+          method: 'GET',
+          signal: controller.signal
+        });
+        
+        clearTimeout(timeoutId);
+        detected = true;
+        break;
+      } catch (e) {}
+    }
+
+    if (detected) {
+      statusPill.className = 'status-pill running';
+      statusText.innerText = 'Vanta Agent: ACTIVE (Running)';
+      checkbox.checked = true;
+    } else {
+      statusPill.className = 'status-pill stopped';
+      statusText.innerText = 'Vanta Agent: NOT DETECTED (Check Task Manager/Activity Monitor)';
     }
   }
 </script>
